@@ -1,25 +1,43 @@
-import java.util.Scanner;
-
 public class Computation {
+    private double[] endpoints;
 
-    public static double lineLength(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    public Computation(double[] endpoints) {
+        this.endpoints = endpoints;
     }
 
-    public static void main(String[] args){
-        System.out.println("Welcome to Line Comparison Computation Program");
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the x-coordinate of the first point: ");
-        double x1 = scanner.nextDouble();
-        System.out.print("Enter the y-coordinate of the first point: ");
-        double y1 = scanner.nextDouble();
-        System.out.print("Enter the x-coordinate of the second point: ");
-        double x2 = scanner.nextDouble();
-        System.out.print("Enter the y-coordinate of the second point: ");
-        double y2 = scanner.nextDouble();
+   
+    public static int compare(Computation line1, Computation line2) {
+        double length1 = calculateLength(line1.endpoints);
+        double length2 = calculateLength(line2.endpoints);
+        return Double.compare(length1, length2);
+    }
 
-        scanner.close();
-        double distance = lineLength(x1, y1, x2, y2);
-        System.out.println("Length of the lines: " + distance);
+    private static double calculateLength(double[] line) {
+        return Math.sqrt(Math.pow(line[2] - line[0], 2) + Math.pow(line[3] - line[1], 2));
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Welcome to Line Comparison Computation Program");
+
+        double[] line1 = {1.0, 2.0, 4.0, 6.0};  
+        double[] line2 = {9.0, 1.0, 3.0, 4.0};  
+
+        Computation lineObj1 = new Computation(line1);
+        Computation lineObj2 = new Computation(line2);
+
+        if (lineObj1.equals(lineObj2)) {
+            System.out.println("Lines are equal.");
+        } else {
+            int result = compare(lineObj1, lineObj2);
+
+            if (result > 0) {
+                System.out.println("Line 1 is greater than Line 2.");
+            } else if (result < 0) {
+                System.out.println("Line 2 is greater than Line 1.");
+            } else {
+                System.out.println("Lines are equal.");
+            }
+        }
+
     }
 }
